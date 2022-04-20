@@ -10,6 +10,7 @@ class WgService {
     url = `https://api.worldofwarships.eu/wows{path}?application_id=${ process.env.WARGAMING_ID }`;
 
     checkResponse(msg, response) {
+        console.log(response);
         if (response.data.status !== 'ok') {
             msg.reply(`${ messages[getUserLocale(msg)].BAD_REQUEST } :smirk:`);
             return false;
@@ -21,7 +22,8 @@ class WgService {
     }
 
     async getAccountStats(msg, searchText) {
-        const user = JSON.parse(JSON.stringify(await this.getAccounts(msg, searchText, true)));
+        const user = await this.getAccounts(msg, searchText, true);
+        if (!user) return;
         axios.get(getUrl(this.url, '/account/info/'), {params: {account_id: user.account_id}})
             .then((response) => {
                 if (!this.checkResponse(msg, response)) return;

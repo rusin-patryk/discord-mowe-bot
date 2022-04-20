@@ -24,7 +24,7 @@ function getCommand(message, key) {
     if (commands[key]) {
         if (commands[key].includes(message.split(':')[0])) {
             if (message.split(':').length === 2) {
-                return message.split(':')[1];
+                return message.split(':')[1].trim().slice(0, 23);
             }
             return true;
         }
