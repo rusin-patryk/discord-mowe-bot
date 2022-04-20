@@ -17,16 +17,28 @@ client.on('ready', (_e) => {
 client.login(process.env.DISCORD_TOKEN);
 
 client.on('messageCreate', (msg) => {
+    if (msg.content.toLowerCase() === 'ping') {
+        msg.reply('pong');
+        return;
+    }
     if (msg.content.split(' ')[0].toLowerCase() !== process.env.BOT_NAME.toLowerCase()) {
-        return
+        return;
     }
     if (getCommand(msg.content,'randomJoke')) {
         jokes.getRandomJoke(msg);
+        return;
     }
     if (getCommand(msg.content, 'findWgAccounts')) {
         const searchText = getCommand(msg.content, 'findWgAccounts');
         if (searchText.length) {
             wg.getWgAccounts(msg, searchText);
+        }
+        return;
+    }
+    if (getCommand(msg.content, 'findWgClans')) {
+        const searchText = getCommand(msg.content, 'findWgClans');
+        if (searchText.length) {
+            wg.getWgClans(msg, searchText);
         }
     }
 });

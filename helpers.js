@@ -23,8 +23,8 @@ function getCommand(message, key) {
     message = normalizeRequest(message);
     if (commands[key]) {
         if (commands[key].includes(message.split(':')[0])) {
-            if (message.trim().split(':').length === 2) {
-                return message.trim().split(':')[1]
+            if (message.split(':').length === 2) {
+                return message.split(':')[1]
             }
             return true
         }
