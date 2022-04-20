@@ -10,7 +10,6 @@ class WgService {
     url = `https://api.worldofwarships.eu/wows{path}?application_id=${ process.env.WARGAMING_ID }`;
 
     checkResponse(msg, response) {
-        console.log(response);
         if (response.data.status !== 'ok') {
             msg.reply(`${ messages[getUserLocale(msg)].BAD_REQUEST } :smirk:`);
             return false;
@@ -67,8 +66,8 @@ class WgService {
                 if (!this.checkResponse(msg, response)) return;
                 let message = '';
                 if (response.data.data && response.data.data.length === 1) {
-                    message = `[${ response.data.data[0].tag }] ${ response.data.data[0].name } 
-                    -> https://wows-numbers.com/clan/${ response.data.data[0].clan_id },${ response.data.data[0].tag }-${ response.data.data[0].name.replace(/ /g, '-') }/`;
+                    message = `[${ response.data.data[0].tag }] ${ response.data.data[0].name } `
+                    message += `-> https://wows-numbers.com/clan/${ response.data.data[0].clan_id },${ response.data.data[0].tag }-${ response.data.data[0].name.replace(/ /g, '-') }/`;
                 } else if (response.data.data && response.data.data.length) {
                     response.data.data.forEach((element, index) => {
                         if (index > 0) {
