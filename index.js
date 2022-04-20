@@ -22,7 +22,9 @@ client.on('messageCreate', function(msg) {
     }
     if (msg.content.indexOf('Janusz znajdź:') >= 0) {
         const searchText = msg.content.trim().split(':')[1];
-        getWargamingAccountID(msg, searchText);
+        if (searchText) {
+            getWargamingAccountID(msg, searchText);
+        }
     }
 });
 
@@ -48,6 +50,8 @@ function getWargamingAccountID(msg, searchText) {
             }
             if (!message.length) {
                 message = 'Nic nie znalazłem :worried:'
+            } else if (response.data.data.length === 1) {
+                message += ` -> https://wows-numbers.com/player/${response.data.data[0].account_id},${response.data.data[0].nickname}/`;
             }
             msg.reply(message);
         });
