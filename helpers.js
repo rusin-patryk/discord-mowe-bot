@@ -3,7 +3,7 @@ const {messages} = require('./constants/messages');
 
 function normalizeRequest(request) {
     return request.toLowerCase()
-        .replace(`${process.env.BOT_NAME.toLowerCase()} `, '')
+        .replace(`${ process.env.BOT_NAME.toLowerCase() } `, '')
         .replace('ą', 'a')
         .replace('ć', 'c')
         .replace('ę', 'e')
@@ -12,7 +12,7 @@ function normalizeRequest(request) {
         .replace('ó', 'o')
         .replace('ś', 's')
         .replace('ź', 'z')
-        .replace('ż', 'z')
+        .replace('ż', 'z');
 }
 
 function getUrl(url, path) {
@@ -24,9 +24,9 @@ function getCommand(message, key) {
     if (commands[key]) {
         if (commands[key].includes(message.split(':')[0])) {
             if (message.split(':').length === 2) {
-                return message.split(':')[1]
+                return message.split(':')[1];
             }
-            return true
+            return true;
         }
     }
     return false;
@@ -41,4 +41,8 @@ function getUserLocale(msg) {
     return 'en';
 }
 
-module.exports = { getUrl, getCommand, getUserLocale };
+module.exports = {
+    getUrl,
+    getCommand,
+    getUserLocale,
+};

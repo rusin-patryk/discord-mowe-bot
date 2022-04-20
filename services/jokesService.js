@@ -13,4 +13,4 @@ function createJokeService() {
     return new JokeService();
 }
 
-module.exports = { createJokeService };
+module.exports = {createJokeService};
