@@ -31,14 +31,21 @@ client.on('messageCreate', (msg) => {
     if (getCommand(msg.content, 'findWgAccounts')) {
         const searchText = getCommand(msg.content, 'findWgAccounts');
         if (searchText.length) {
-            wg.getWgAccounts(msg, searchText);
+            wg.getAccounts(msg, searchText);
         }
         return;
     }
     if (getCommand(msg.content, 'findWgClans')) {
         const searchText = getCommand(msg.content, 'findWgClans');
         if (searchText.length) {
-            wg.getWgClans(msg, searchText);
+            wg.getClans(msg, searchText);
+        }
+        return;
+    }
+    if (getCommand(msg.content, 'findWgStats')) {
+        const searchText = getCommand(msg.content, 'findWgStats');
+        if (searchText.length) {
+            wg.getAccountStats(msg, searchText);
         }
     }
 });
