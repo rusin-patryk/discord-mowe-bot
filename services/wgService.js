@@ -7,7 +7,7 @@ const {messages} = require('../constants/messages');
 const axios = require('axios').default;
 
 class WgService {
-    url = `https://api.worldofwarships.eu/wows{path}?application_id=${ process.env.WARGAMING_TOKEN }`;
+    url = `https://api.worldofwarships.eu/wows{path}?application_id=${ process.env.WARGAMING_ID }`;
 
     checkResponse(msg, response) {
         if (response.data.status !== 'ok') {
