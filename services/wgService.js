@@ -21,7 +21,8 @@ class WgService {
     }
 
     async getAccountStats(msg, searchText) {
-        const user = JSON.parse(JSON.stringify(await this.getAccounts(msg, searchText, true)));
+        const user = await this.getAccounts(msg, searchText, true);
+        if (!user) return;
         axios.get(getUrl(this.url, '/account/info/'), {params: {account_id: user.account_id}})
             .then((response) => {
                 if (!this.checkResponse(msg, response)) return;
@@ -65,8 +66,8 @@ class WgService {
                 if (!this.checkResponse(msg, response)) return;
                 let message = '';
                 if (response.data.data && response.data.data.length === 1) {
-                    message = `[${ response.data.data[0].tag }] ${ response.data.data[0].name } 
-                    -> https://wows-numbers.com/clan/${ response.data.data[0].clan_id },${ response.data.data[0].tag }-${ response.data.data[0].name.replace(/ /g, '-') }/`;
+                    message = `[${ response.data.data[0].tag }] ${ response.data.data[0].name } `
+                    message += `-> https://wows-numbers.com/clan/${ response.data.data[0].clan_id },${ response.data.data[0].tag }-${ response.data.data[0].name.replace(/ /g, '-') }/`;
                 } else if (response.data.data && response.data.data.length) {
                     response.data.data.forEach((element, index) => {
                         if (index > 0) {

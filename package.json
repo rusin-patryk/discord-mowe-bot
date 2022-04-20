@@ -4,7 +4,7 @@
   "description": "Bot to use on Discord, related with World of Warships game.",
   "main": "index.js",
   "scripts": {
-    "run": "node index.js",
+    "start": "node index.js",
     "test": "echo \"Works\" && exit 0"
   },
   "author": "Patryk Rusin <rusin@patryk.in>",
