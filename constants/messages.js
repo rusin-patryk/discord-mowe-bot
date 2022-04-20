@@ -7,8 +7,8 @@ const messages = {
     en: {
         NOT_FOUND: 'I found nothing',
         TOO_MANY_RESULTS: 'Type more precise nickname for a better result',
-        BAD_REQUEST: 'Entered wrong command'
+        BAD_REQUEST: 'Entered wrong command',
     },
-}
+};
 
-module.exports = { messages };
+module.exports = {messages};

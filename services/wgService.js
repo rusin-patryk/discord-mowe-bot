@@ -20,8 +20,6 @@ class WgService {
         return true;
     }
 
-    getPR
-
     async getAccountStats(msg, searchText) {
         const user = JSON.parse(JSON.stringify(await this.getAccounts(msg, searchText, true)));
         axios.get(getUrl(this.url, '/account/info/'), {params: {account_id: user.account_id}})
@@ -30,12 +28,12 @@ class WgService {
                 let message = '';
                 const stats = response.data.data[user.account_id].statistics.pvp;
                 message = `**${ user.nickname }** -> https://wows-numbers.com/player/${ user.account_id },${ user.nickname }/ `;
-                message +=`\nWR: \`${ (stats.wins * 100 / stats.battles).toFixed(2) }%\``;
-                message +=`\nPR: \`${ 'TODO' }\``;
-                message +=`\nBattles: \`${ stats.battles }\``;
-                message +=`\nAvg DMG: \`${ (stats.damage_dealt / stats.battles).toFixed() }\``;
-                message +=`\nAvg XP: \`${ (stats.xp / stats.battles).toFixed() }\``;
-                message +=`\nK/D ratio: \`${ (stats.frags / (stats.battles - stats.survived_battles)).toFixed(2) }\``;
+                message += `\nWR: \`${ (stats.wins * 100 / stats.battles).toFixed(2) }%\``;
+                message += `\nPR: \`${ 'TODO' }\``;
+                message += `\nBattles: \`${ stats.battles }\``;
+                message += `\nAvg DMG: \`${ (stats.damage_dealt / stats.battles).toFixed() }\``;
+                message += `\nAvg XP: \`${ (stats.xp / stats.battles).toFixed() }\``;
+                message += `\nK/D ratio: \`${ (stats.frags / (stats.battles - stats.survived_battles)).toFixed(2) }\``;
                 msg.reply(message);
             });
     }
