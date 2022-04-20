@@ -4,7 +4,7 @@ class JokeService {
     getRandomJoke(msg) {
         axios.get('https://api.icndb.com/jokes/random')
             .then((response) => {
-                msg.reply(response.data.value.joke);
+                msg.reply(response.data.value.joke.replace('&quot;', '"'));
             });
     }
 }

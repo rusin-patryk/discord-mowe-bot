@@ -1,8 +1,9 @@
-const {getUrl} = require('../helpers.js');
+const {getUrl, getUserLocale} = require('../helpers');
+const {messages} = require('../constants/messages');
 
 const axios = require('axios').default;
 
-class WargamingService {
+class WgService {
     url = `https://api.worldofwarships.eu/wows{path}?application_id=${process.env.WARGAMING_TOKEN}`;
 
     getWgAccounts(msg, searchText) {
@@ -10,7 +11,7 @@ class WargamingService {
             .then((response) => {
                 let message = '';
                 if (!response.data.data.length) {
-                    message = 'Nic nie znalazłem :worried:';
+                    message = `${messages[getUserLocale(msg)].NOT_FOUND} :worried:`;
                 } else if (response.data.data.length === 1) {
                     message = `${response.data.data[0].nickname} (\`${response.data.data[0].account_id}\`) -> https://wows-numbers.com/player/${response.data.data[0].account_id},${response.data.data[0].nickname}/`;
                 } else {
@@ -21,7 +22,7 @@ class WargamingService {
                         message += element.nickname;
                     })
                     if (message.length > 200) {
-                        message = message.slice(0, 197) + '... *Podaj dokładniejszy nick aby uzyskać lepszy wynik.*';
+                        message = message.slice(0, 197) + `... *${messages[getUserLocale(msg)].TOO_MANY_RESULTS}.*`;
                     }
                 }
 
@@ -31,7 +32,7 @@ class WargamingService {
 }
 
 function createWgService() {
-    return new WargamingService();
+    return new WgService();
 }
 
 module.exports = { createWgService };

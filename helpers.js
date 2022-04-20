@@ -1,4 +1,5 @@
-const {commands} = require('./commands');
+const {commands} = require('./constants/commands');
+const {messages} = require('./constants/messages');
 
 function normalizeRequest(request) {
     return request.toLowerCase()
@@ -31,4 +32,13 @@ function getCommand(message, key) {
     return false;
 }
 
-module.exports = { getUrl, getCommand };
+function getUserLocale(msg) {
+    if (msg.member && msg.member.guild && msg.member.guild.preferredLocale) {
+        if (messages[msg.member.guild.preferredLocale]) {
+            return msg.member.guild.preferredLocale.split('-')[0].toLowerCase();
+        }
+    }
+    return 'en';
+}
+
+module.exports = { getUrl, getCommand, getUserLocale };

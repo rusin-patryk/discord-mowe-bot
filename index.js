@@ -1,6 +1,6 @@
-const {getCommand} = require('./helpers.js');
-const {createWgService} = require('./services/wgService.js');
-const {createJokeService} = require('./services/jokesService.js');
+const {getCommand} = require('./helpers');
+const {createWgService} = require('./services/wgService');
+const {createJokeService} = require('./services/jokesService');
 
 require('dotenv').config();
 
