@@ -3,6 +3,7 @@ const commands = {
     findWgAccounts: ['znajdz', 'find'],
     findWgClans: ['znajdz klan', 'find clan'],
     findWgStats: ['staty', 'stats'],
+    showColors: ['kolory', 'colors'],
 };
 
 module.exports = {commands};

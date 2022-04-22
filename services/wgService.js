@@ -1,10 +1,14 @@
 const {
     getUrl,
     getUserLocale,
+    getIconByStat,
 } = require('../helpers');
 const {messages} = require('../constants/messages');
-
+const {createWnService} = require('./wowsNumbersService');
 const axios = require('axios').default;
+
+const wowsNumber = createWnService();
+wowsNumber.init();
 
 class WgService {
     url = `https://api.worldofwarships.eu/wows{path}?application_id=${ process.env.WARGAMING_ID }`;
@@ -20,22 +24,29 @@ class WgService {
         return true;
     }
 
+    async getStatsColors() {
+        return await wowsNumber.getStatsColors();
+    }
+
     async getAccountStats(msg, searchText) {
         const user = await this.getAccounts(msg, searchText, true);
         if (!user) return;
         axios.get(getUrl(this.url, '/account/info/'), {params: {account_id: user.account_id}})
             .then((response) => {
                 if (!this.checkResponse(msg, response)) return;
-                let message = '';
-                const stats = response.data.data[user.account_id].statistics.pvp;
-                message = `**${ user.nickname }** -> https://wows-numbers.com/player/${ user.account_id },${ user.nickname }/ `;
-                message += `\nWR: \`${ (stats.wins * 100 / stats.battles).toFixed(2) }%\``;
-                message += `\nPR: \`${ 'TODO' }\``;
-                message += `\nBattles: \`${ stats.battles }\``;
-                message += `\nAvg DMG: \`${ (stats.damage_dealt / stats.battles).toFixed() }\``;
-                message += `\nAvg XP: \`${ (stats.xp / stats.battles).toFixed() }\``;
-                message += `\nK/D ratio: \`${ (stats.frags / (stats.battles - stats.survived_battles)).toFixed(2) }\``;
-                msg.reply(message);
+                this.getStatsColors().then((colors) => {
+                    let message = '';
+                    const stats = response.data.data[user.account_id].statistics.pvp;
+                    message = `**${ user.nickname }** -> https://wows-numbers.com/player/${ user.account_id },${ user.nickname }/ `;
+                    message += `\nPR: \`${ 'TODO' }\``;
+                    message += `\n${getIconByStat(colors, 'win_rate', stats.wins * 100 / stats.battles)} WR: \`${ (stats.wins * 100 / stats.battles).toFixed(2) }%\``;
+                    message += `\n${getIconByStat(colors, 'battles', stats.battles)} Battles: \`${ stats.battles }\``;
+                    message += `\n${getIconByStat(colors, 'average_frags', stats.frags / stats.battles)} Avg Frags: \`${ (stats.frags / stats.battles).toFixed(2) }\``;
+                    message += `\nAvg DMG: \`${ (stats.damage_dealt / stats.battles).toFixed() }\``;
+                    message += `\nAvg XP: \`${ (stats.xp / stats.battles).toFixed() }\``;
+                    message += `\nK/D ratio: \`${ (stats.frags / (stats.battles - stats.survived_battles)).toFixed(2) }\``;
+                    msg.reply(message);
+                });
             });
     }
 
