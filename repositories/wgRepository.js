@@ -3,7 +3,7 @@ const {replaceInText} = require('../helpers');
 const axios = require('axios').default;
 
 class WgRepository {
-    url = `https://api.worldofwarships.eu/wows{path}?application_id=${ process.env.WARGAMING_ID }`;
+    url = `https://api.worldofwarships.${ process.env.WARGAMING_SERVER || 'eu' }/wows{path}?application_id=${ process.env.WARGAMING_ID }`;
 
     async fetchAccountStats(searchText) {
         const user = await this.fetchAccounts(searchText, true);
