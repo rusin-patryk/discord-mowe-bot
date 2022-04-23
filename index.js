@@ -1,18 +1,11 @@
-const {
-    getCommand,
-    getUserLocale,
-    getColorValue,
-} = require('./helpers');
+const {getCommand, getUserLocale, getColorValue} = require('./helpers');
 const {createWgService} = require('./services/wgService');
 const {createJokeService} = require('./services/jokesService');
 const {messages} = require('./constants/messages');
 
 require('dotenv').config();
 
-const {
-    Client,
-    Intents,
-} = require('discord.js');
+const {Client, Intents,} = require('discord.js');
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 const jokes = createJokeService();
 const wg = createWgService();
@@ -55,7 +48,7 @@ client.on('messageCreate', (msg) => {
         }
         return;
     }
-    // TODO use array for this or whatever that isn't so stupid..
+    // TODO use loop for this or whatever that isn't so stupid..
     if (getCommand(msg.content, 'showColors')) {
         wg.getStatsColors().then((colors) => {
             let message = `**${ messages[getUserLocale(msg)].COLORS_MEANING }**`;

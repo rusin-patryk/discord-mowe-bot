@@ -15,8 +15,17 @@ function normalizeRequest(request) {
         .replace('ż', 'z');
 }
 
-function getUrl(url, path) {
-    return url.replace('{path}', path);
+function replaceInText(text, search, replace) {
+    if (Array.isArray(search)) {
+        search.forEach((element, index) => {
+            let replaceEl = replace;
+            if (Array.isArray(replace)) replaceEl = replace[index];
+            text = text.replace(element, replaceEl)
+        })
+    } else {
+        return text.replace(search, replace);
+    }
+    return text;
 }
 
 function getCommand(message, key) {
@@ -91,7 +100,7 @@ function getIconByColor(color) {
 }
 
 module.exports = {
-    getUrl,
+    replaceInText,
     getCommand,
     getUserLocale,
     getColorValue,

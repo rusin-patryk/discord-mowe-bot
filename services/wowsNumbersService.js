@@ -1,4 +1,6 @@
-const axios = require('axios').default;
+const {createWnRepository} = require('../repositories/wowsNumbersRepository')
+
+const wnRepository = createWnRepository();
 
 class WnService {
     cache = new Map();
@@ -28,17 +30,25 @@ class WnService {
     async getStatsColors() {
         let response = this.getFromCache('colors');
         if (response) return response;
-        response = await axios.get('https://wows-numbers.com/colors/json');
-        this.createCacheObj('colors', response.data);
-        return response.data;
+        response = await wnRepository.fetchStatsColors();
+        if (response) {
+            this.createCacheObj('colors', response);
+            return response;
+        } else {
+            return false
+        }
     }
 
     async getExpectedStats() {
         let response = this.getFromCache('expected');
         if (response) return response;
-        response = await axios.get('https://api.wows-numbers.com/personal/rating/expected/json/');
-        this.createCacheObj('server', response.data);
-        return response.data;
+        response = await wnRepository.fetchExpectedStats();
+        if (response) {
+            this.createCacheObj('server', response);
+            return response;
+        } else {
+            return false
+        }
     }
 }
 
