@@ -46,7 +46,11 @@ Wargaming servers: `eu`, `ru`, `asia`, na (type `com` instead).
 4. Type `{BOT_NAME} stats: {wows_player_nickname}` for print user stats. The nickname must be valid to find the
     appropriate user (I'm working on it to add PR, colors etc.).
 
-![image](https://user-images.githubusercontent.com/68754966/164336065-747864ac-2ae6-4b5c-8774-858c10a88801.png)
+![image](https://user-images.githubusercontent.com/68754966/164999126-163c63ad-731b-42b3-aabf-ed7f36ae935b.png)
+
+5. Type `{BOT_NAME} colors` for print color ranges according to statistics.
+
+![image](https://user-images.githubusercontent.com/68754966/164999352-8c1734c7-ff27-4ec5-8360-7b952de244a4.png)
 
 ## Sources of data
 
