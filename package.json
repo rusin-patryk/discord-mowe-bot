@@ -1,6 +1,6 @@
 {
   "name": "discord-mowe-bot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bot to use on Discord, related with World of Warships game.",
   "main": "index.js",
   "scripts": {
