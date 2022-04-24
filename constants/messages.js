@@ -39,7 +39,7 @@ const messages = {
         GREAT: 'Great',
         UNICUM: 'Unicum',
         SUPER_UNICUM: 'Super Unicum',
-        HELP_TITLE: 'Lista dostępnych komend',
+        HELP_TITLE: 'List of available commands',
         HELP_JOKE: 'displays a random joke about Chuck Norris',
         HELP_FIND: 'searches for a player with a given nickname (or a list of players)',
         HELP_FIND_CLANS: 'searches for a clan with a given name or tag (or a list of clans)',
