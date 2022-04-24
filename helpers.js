@@ -99,10 +99,44 @@ function getIconByColor(color) {
     }
 }
 
+function countMaxChars(value) {
+    let maxChars = 0;
+    if (typeof value === 'object' && !Array.isArray(value)) {
+        Object.keys(value).forEach((element) => {
+            if (value[element].toString().length > maxChars) {
+                maxChars = value[element].toString().length;
+            }
+        })
+    } else if (typeof value === 'object') {
+        value.forEach((element) => {
+            if (element.toString().length > maxChars) {
+                maxChars = element.toString().length;
+            }
+        })
+    } else if (value) {
+        maxChars = maxChars.toString().length;
+    }
+    return maxChars;
+}
+
+function fillWhitespaces(value, toLength) {
+    value = value.toString();
+    if (value.length < toLength) {
+        let whitespaces = '';
+        for (let i = 0; i < toLength -value.length; i++) {
+            whitespaces += ' ';
+        }
+        value = whitespaces + value;
+    }
+    return value;
+}
+
 module.exports = {
     replaceInText,
     getCommand,
     getUserLocale,
     getColorValue,
     getIconByStat,
+    countMaxChars,
+    fillWhitespaces
 };
