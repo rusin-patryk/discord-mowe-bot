@@ -20,8 +20,10 @@ Wargaming API, help with server administration etc.
 ```dotenv
 DISCORD_TOKEN=INSERT_DISCORD_APP_TOKEN_HERE
 WARGAMING_ID=INSERT_WARGAMIN_APP_ID_HERE
+WARGAMING_SERVER=INSER_WARGAMING_SERVER
 BOT_NAME=INSERT_BOT_NAME_HERE
 ```
+Wargaming servers: `eu`, `ru`, `asia`, na (type `com` instead).
 
 8. Use `node index.js` to run script and authenticate bot program.
    ![image](https://user-images.githubusercontent.com/68754966/164335697-c9595d88-c78d-46bd-bd2f-f8ce684a2caa.png)
@@ -44,4 +46,14 @@ BOT_NAME=INSERT_BOT_NAME_HERE
 4. Type `{BOT_NAME} stats: {wows_player_nickname}` for print user stats. The nickname must be valid to find the
     appropriate user (I'm working on it to add PR, colors etc.).
 
-![image](https://user-images.githubusercontent.com/68754966/164336065-747864ac-2ae6-4b5c-8774-858c10a88801.png)
+![image](https://user-images.githubusercontent.com/68754966/164999126-163c63ad-731b-42b3-aabf-ed7f36ae935b.png)
+
+5. Type `{BOT_NAME} colors` for print color ranges according to statistics.
+
+![image](https://user-images.githubusercontent.com/68754966/164999352-8c1734c7-ff27-4ec5-8360-7b952de244a4.png)
+
+## Sources of data
+
+- I'm using [WoWS-Numbers.com](https://wows-numbers.com/) for [PR](https://wows-numbers.com/personal/rating) formula & colors calculation.
+- I'm using [Wargaming API](https://developers.wargaming.net/reference/all/wows/) for fetching info about players.
+- I'm using [ICNDb.com](https://www.icndb.com/) for fetching jokes.
