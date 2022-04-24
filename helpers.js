@@ -131,6 +131,17 @@ function fillWhitespaces(value, toLength) {
     return value;
 }
 
+function getCommandsListByKey(key, locale, additionalString = '') {
+    let commandsString = '';
+    commands[key].forEach((element, index) => {
+        if (index > 0) {
+            commandsString += ` ${messages[locale].OR} `;
+        }
+        commandsString += `\`${ process.env.BOT_NAME } ${element}${additionalString}\``;
+    })
+    return commandsString;
+}
+
 module.exports = {
     replaceInText,
     getCommand,
@@ -138,5 +149,6 @@ module.exports = {
     getColorValue,
     getIconByStat,
     countMaxChars,
-    fillWhitespaces
+    fillWhitespaces,
+    getCommandsListByKey
 };

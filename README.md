@@ -2,10 +2,9 @@
 
 ## About project
 
-Discord MOWE Bot is a bot to use on Discord's servers. Main bot features are fetching users, clans, statistics from
-Wargaming API, help with server administration etc.
+Bot to use on Discord's servers. Main bot features are fetching users, clans, statistics, clan periodic summary etc. from Wargaming API.
 
-### This is a draft version. I'm still developing a bot so you can expect new features soon.
+### I'm still developing a bot so you can expect new features soon.
 
 ## How to run
 
@@ -26,7 +25,8 @@ BOT_NAME=INSERT_BOT_NAME_HERE
 Wargaming servers: `eu`, `ru`, `asia`, na (type `com` instead).
 
 8. Use `node index.js` to run script and authenticate bot program.
-   ![image](https://user-images.githubusercontent.com/68754966/164335697-c9595d88-c78d-46bd-bd2f-f8ce684a2caa.png)
+
+![image](https://user-images.githubusercontent.com/68754966/164335697-c9595d88-c78d-46bd-bd2f-f8ce684a2caa.png)
 
 ## How to use
 
@@ -51,6 +51,10 @@ Wargaming servers: `eu`, `ru`, `asia`, na (type `com` instead).
 5. Type `{BOT_NAME} colors` for print color ranges according to statistics.
 
 ![image](https://user-images.githubusercontent.com/68754966/164999352-8c1734c7-ff27-4ec5-8360-7b952de244a4.png)
+
+6. Type `{BOT_NAME} help` for print list of available commands.
+
+![image](https://user-images.githubusercontent.com/68754966/165000875-fd736af4-0e0a-4d4a-8133-9c6272b813a4.png)
 
 ## Sources of data
 
