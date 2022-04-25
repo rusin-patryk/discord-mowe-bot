@@ -19,8 +19,10 @@ const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_M
 const jokes = createJokeService();
 const wg = createWgService();
 const wn = createWnService();
-
-const express = require('express'), app = express(), port = process.env.PORT || 3000
+const cors = require('cors');
+const express = require('express'), app = express(), port = process.env.PORT || 3000;
+app.use(cors());
+app.options('*', cors());
 const routes = require('./api/routes/wnRoutes');
 routes(app, wn);
 app.listen(port);
