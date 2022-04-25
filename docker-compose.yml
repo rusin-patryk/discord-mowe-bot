@@ -1,0 +1,11 @@
+version: '3.6'
+
+services:
+  mowewowsclan:
+    container_name: mowewowsclan
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '3000:3000'
