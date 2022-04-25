@@ -1,14 +1,34 @@
-const {getCommand, getUserLocale, getColorValue, getCommandsListByKey} = require('./helpers');
+const {
+    getCommand,
+    getUserLocale,
+    getColorValue,
+    getCommandsListByKey,
+} = require('./helpers');
 const {createWgService} = require('./services/wgService');
+const {createWnService} = require('./services/wowsNumbersService');
 const {createJokeService} = require('./services/jokesService');
 const {messages} = require('./constants/messages');
 
 require('dotenv').config();
 
-const {Client, Intents,} = require('discord.js');
+const {
+    Client,
+    Intents,
+} = require('discord.js');
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 const jokes = createJokeService();
 const wg = createWgService();
+const wn = createWnService();
+
+const express = require('express'), app = express(), port = process.env.PORT || 3000
+const routes = require('./api/routes/wnRoutes');
+routes(app, wn);
+app.listen(port);
+app.use((req, res) => {
+    res.status(404).send({url: req.originalUrl + ' not found'})
+});
+
+console.log('REST API server started on: ' + port);
 
 client.on('ready', (_e) => {
     console.log(`Logged in as ${ client.user.tag }!`);
@@ -50,8 +70,8 @@ client.on('messageCreate', (msg) => {
     }
     // TODO use loop for this or whatever that isn't so stupid..
     if (getCommand(msg.content, 'showColors')) {
-        wg.getStatsColors().then((colors) => {
-            const locale =  getUserLocale(msg);
+        wn.getStatsColors().then((colors) => {
+            const locale = getUserLocale(msg);
             let message = `**${ messages[locale].COLORS_MEANING }**`;
             message += `\n:red_circle: - ${ messages[locale].BAD }`;
             message += `\nPR: \`0-${ getColorValue(colors, 'rating', '#FE0E00') }\`,`;
@@ -94,14 +114,14 @@ client.on('messageCreate', (msg) => {
         return;
     }
     if (getCommand(msg.content, 'help')) {
-        const locale =  getUserLocale(msg);
+        const locale = getUserLocale(msg);
         let message = `**${ messages[locale].HELP_TITLE }:**`;
-        message += `\n${getCommandsListByKey('randomJoke', locale)} - ${ messages[locale].HELP_JOKE }`;
-        message += `\n${getCommandsListByKey('findWgAccounts', locale, `: {${ messages[locale].NICKNAME }}`)} - ${ messages[locale].HELP_FIND }`;
-        message += `\n${getCommandsListByKey('findWgClans', locale, `: {${ messages[locale].NAME_OR_TAG }}`)} - ${ messages[locale].HELP_FIND_CLANS }`;
-        message += `\n${getCommandsListByKey('findWgStats', locale, `: {${ messages[locale].NICKNAME }}`)} - ${ messages[locale].HELP_STATS }`;
-        message += `\n${getCommandsListByKey('showColors', locale)} - ${ messages[locale].HELP_COLORS }`;
-        message += `\n${getCommandsListByKey('help', locale)} - ${ messages[locale].HELP_HELP }`;
+        message += `\n${ getCommandsListByKey('randomJoke', locale) } - ${ messages[locale].HELP_JOKE }`;
+        message += `\n${ getCommandsListByKey('findWgAccounts', locale, `: {${ messages[locale].NICKNAME }}`) } - ${ messages[locale].HELP_FIND }`;
+        message += `\n${ getCommandsListByKey('findWgClans', locale, `: {${ messages[locale].NAME_OR_TAG }}`) } - ${ messages[locale].HELP_FIND_CLANS }`;
+        message += `\n${ getCommandsListByKey('findWgStats', locale, `: {${ messages[locale].NICKNAME }}`) } - ${ messages[locale].HELP_STATS }`;
+        message += `\n${ getCommandsListByKey('showColors', locale) } - ${ messages[locale].HELP_COLORS }`;
+        message += `\n${ getCommandsListByKey('help', locale) } - ${ messages[locale].HELP_HELP }`;
         message += `__\n${ messages[locale].PARAMS_EXPLAINED }__`;
         msg.reply(message);
     }
