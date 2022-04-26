@@ -2,17 +2,11 @@ const {commands} = require('./constants/commands');
 const {messages} = require('./constants/messages');
 
 function normalizeRequest(request) {
+    if (!request) return '';
     return request.toLowerCase()
-        .replace(`${ process.env.BOT_NAME.toLowerCase() } `, '')
-        .replace('ą', 'a')
-        .replace('ć', 'c')
-        .replace('ę', 'e')
-        .replace('ł', 'l')
-        .replace('ń', 'n')
-        .replace('ó', 'o')
-        .replace('ś', 's')
-        .replace('ź', 'z')
-        .replace('ż', 'z');
+        .replace(process.env.BOT_NAME.toLowerCase(), '').trim()
+        .normalize("NFD")
+        .replace(/[\u00df-\u00ff][\u0300-\u036f][\u1e02-\u1ef3]/g, '');
 }
 
 function replaceInText(text, search, replace) {
