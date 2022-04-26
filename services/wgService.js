@@ -1,5 +1,4 @@
 const {createWgRepository} = require('../repositories/wgRepository');
-const {createWnService} = require('./wowsNumbersService');
 const {
     getUserLocale,
     getIconByStat,
@@ -7,11 +6,10 @@ const {
     fillWhitespaces,
 } = require('../helpers');
 const {messages} = require('../constants/messages');
+const {createWnService} = require('./wowsNumbersService');
 
 const wgRepository = createWgRepository();
-
-const wowsNnService = createWnService();
-wowsNnService.init();
+const wnServiceInstance = createWnService();
 
 class WgService {
     checkWgResponse(msg, response) {
@@ -28,14 +26,10 @@ class WgService {
         return true;
     }
 
-    async getStatsColors() {
-        return await wowsNnService.getStatsColors();
-    }
-
     async getAccountStats(msg, searchText) {
         const response = await wgRepository.fetchAccountStats(searchText);
         if (this.checkWgResponse(msg, response)) {
-            const colors = await wowsNnService.getStatsColors();
+            const colors = await wnServiceInstance.getStatsColors();
             const user = response.data[Object.keys(response.data)[0]];
             const stats = user.statistics.pvp;
             this.getPR(msg, '', user.account_id)
@@ -115,7 +109,7 @@ class WgService {
 
     async getPR(msg, searchText, accountId) {
         const shipsStats = await wgRepository.fetchWarshipsStats(searchText, accountId);
-        const expectedValues = await wowsNnService.getExpectedStats();
+        const expectedValues = await wnServiceInstance.getExpectedStats();
         if (this.checkWgResponse(msg, shipsStats) && !!expectedValues) {
             let actualDmg = 0;
             let expectedDmg = 0;
@@ -125,12 +119,13 @@ class WgService {
             let expectedWins = 0;
             shipsStats.data[Object.keys(shipsStats.data)[0]].forEach((element) => {
                 if (!Array.isArray(expectedValues.data[element.ship_id]) && element.pvp.battles) {
+                    const expectedElement = expectedValues.data[element.ship_id];
                     actualDmg += element.pvp.damage_dealt;
-                    expectedDmg += expectedValues.data[element.ship_id].average_damage_dealt * element.pvp.battles;
+                    expectedDmg += expectedElement.average_damage_dealt * element.pvp.battles;
                     actualFrags += element.pvp.frags;
-                    expectedFrags += expectedValues.data[element.ship_id].average_frags * element.pvp.battles;
+                    expectedFrags += expectedElement.average_frags * element.pvp.battles;
                     actualWins += element.pvp.wins;
-                    expectedWins += (expectedValues.data[element.ship_id].win_rate / 100) * element.pvp.battles;
+                    expectedWins += (expectedElement.win_rate / 100) * element.pvp.battles;
                 }
             });
             const rDmg = actualDmg / expectedDmg;

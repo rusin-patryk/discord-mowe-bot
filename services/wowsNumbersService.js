@@ -52,8 +52,14 @@ class WnService {
     }
 }
 
+let wnInstance = undefined;
+
 function createWnService() {
-    return new WnService();
+    if (!wnInstance) {
+        wnInstance = new WnService();
+        wnInstance.init();
+    }
+    return wnInstance;
 }
 
 module.exports = {createWnService};
